@@ -1,0 +1,6 @@
+[package]
+name = "magic-packet"
+version = "0.1.0"
+authors = ["Armin Häberling <armin.aha@gmail.com>"]
+
+[dependencies]

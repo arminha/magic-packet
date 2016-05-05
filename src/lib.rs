@@ -2,7 +2,7 @@
 pub mod magic {
 
     use std::io::Error;
-    use std::net::UdpSocket;
+    use std::net::{ToSocketAddrs, UdpSocket};
 
     fn create_magic_packet(mac: &[u8; 6]) -> [u8; 102] {
         let mut buffer = [0; 102];
@@ -16,10 +16,10 @@ pub mod magic {
         buffer
     }
 
-    pub fn send(mac: &[u8; 6]) -> Result<(), Error> {
-        let socket = try!(UdpSocket::bind("127.0.0.1:34254"));
+    pub fn send_magic_packet<A: ToSocketAddrs>(mac: &[u8; 6], addr: A) -> Result<(), Error> {
+        let socket = try!(UdpSocket::bind("0.0.0.0:0"));
         let buffer = create_magic_packet(mac);
-        try!(socket.send_to(&buffer, "255.255.255.255:0"));
+        try!(socket.send_to(&buffer, addr));
         Ok(())
     }
 
@@ -38,4 +38,17 @@ pub mod magic {
         assert_eq!(3, buffer[98]);
         assert_eq!(6, buffer[101]);
     }
+
+    #[cfg(test)]
+    mod test {
+
+        use magic;
+
+        #[test]
+        fn broadcast_magic_packet() {
+            let mac = [1, 2, 3, 4, 5, 6];
+            assert_eq!((), magic::send_magic_packet(&mac, "192.168.1.255:9").unwrap());
+        }
+    }
+
 }

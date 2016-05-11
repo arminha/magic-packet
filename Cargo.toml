@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Armin Häberling <armin.aha@gmail.com>"]
 
 [dependencies]
+clap = "2.4"
+regex = "0.1"

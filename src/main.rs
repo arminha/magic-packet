@@ -1,11 +1,11 @@
 
-extern crate magic_packet;
-
 extern crate clap;
 extern crate regex;
 
 use clap::{Arg, App};
 use regex::Regex;
+
+mod magic;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
@@ -21,7 +21,7 @@ fn main() {
     let mac = matches.value_of("MAC_ADDR").unwrap();
     let mac = read_mac(mac);
     let address = "192.168.1.255:9";
-    magic_packet::send_magic_packet(&mac, address).unwrap();
+    magic::send_magic_packet(&mac, address).unwrap();
 }
 
 fn is_mac(val: String) -> Result<(), String> {

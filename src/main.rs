@@ -20,7 +20,7 @@ fn main() {
                         .get_matches();
     let mac = matches.value_of("MAC_ADDR").unwrap();
     let mac = read_mac(mac);
-    let address = "192.168.1.255:9";
+    let address = "255.255.255.255:9";
     magic::send_magic_packet(&mac, address).unwrap();
 }
 

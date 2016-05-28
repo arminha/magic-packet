@@ -46,3 +46,25 @@ fn read_mac(val: &str) -> [u8; 6] {
     }
     mac
 }
+
+#[cfg(test)]
+mod test {
+
+    #[test]
+    fn valid_mac() {
+        assert_eq!(Ok(()), super::is_mac("01:23:89:AB:CD:EF".to_string()));
+        assert_eq!(Ok(()), super::is_mac("01-45-67-AB-CD-EF".to_string()));
+    }
+
+    #[test]
+    fn invalid_mac() {
+        assert_eq!(Err("\"01:23:89:AB:CD\" is not a MAC address.".to_string()),
+            super::is_mac("01:23:89:AB:CD".to_string()));
+    }
+
+    #[test]
+    fn read_valid_mac() {
+        assert_eq!([1, 35, 137, 171, 205, 239], super::read_mac("01:23:89:AB:CD:EF"));
+        assert_eq!([1, 69, 103, 171, 205, 239], super::read_mac("01-45-67-AB-CD-EF"));
+    }
+}

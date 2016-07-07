@@ -2,27 +2,13 @@
 extern crate clap;
 extern crate regex;
 
-use clap::{Arg, App, AppSettings, SubCommand};
 use regex::Regex;
 
 mod magic;
-
-const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+mod cli;
 
 fn main() {
-    let matches = App::new("magic-packet")
-                        .version(VERSION)
-                        .setting(AppSettings::SubcommandRequiredElseHelp)
-                        .setting(AppSettings::VersionlessSubcommands)
-                        .subcommand(SubCommand::with_name("send")
-                            .about("Sends a magic packet to a MAC address")
-                            .arg(Arg::with_name("MAC_ADDR")
-                                .help("The MAC address of the target")
-                                .required(true)
-                                .index(1)
-                                .validator(is_mac)))
-                        .subcommand(SubCommand::with_name("listen"))
-                        .get_matches();
+    let matches = cli::build_cli().get_matches();
     if let Some(matches) = matches.subcommand_matches("send") {
         let mac = matches.value_of("MAC_ADDR").unwrap();
         send(mac);
@@ -35,15 +21,6 @@ fn send(mac: &str) {
     let mac = read_mac(mac);
     let address = "255.255.255.255:9";
     magic::send_magic_packet(&mac, address).unwrap();
-}
-
-fn is_mac(val: String) -> Result<(), String> {
-    let mac_regex = Regex::new("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$").unwrap();
-    if mac_regex.is_match(&val) {
-        Ok(())
-    } else {
-        Err("\"".to_string() + &val + "\" is not a MAC address.")
-    }
 }
 
 fn read_mac(val: &str) -> [u8; 6] {
@@ -62,18 +39,6 @@ fn read_mac(val: &str) -> [u8; 6] {
 
 #[cfg(test)]
 mod test {
-
-    #[test]
-    fn valid_mac() {
-        assert_eq!(Ok(()), super::is_mac("01:23:89:AB:CD:EF".to_string()));
-        assert_eq!(Ok(()), super::is_mac("01-45-67-AB-CD-EF".to_string()));
-    }
-
-    #[test]
-    fn invalid_mac() {
-        assert_eq!(Err("\"01:23:89:AB:CD\" is not a MAC address.".to_string()),
-            super::is_mac("01:23:89:AB:CD".to_string()));
-    }
 
     #[test]
     fn read_valid_mac() {

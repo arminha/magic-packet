@@ -2,7 +2,7 @@
 extern crate clap;
 extern crate regex;
 
-use clap::{Arg, App};
+use clap::{Arg, App, AppSettings, SubCommand};
 use regex::Regex;
 
 mod magic;
@@ -12,13 +12,26 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 fn main() {
     let matches = App::new("magic-packet")
                         .version(VERSION)
-                        .arg(Arg::with_name("MAC_ADDR")
+                        .setting(AppSettings::SubcommandRequiredElseHelp)
+                        .setting(AppSettings::VersionlessSubcommands)
+                        .subcommand(SubCommand::with_name("send")
+                            .about("Sends a magic packet to a MAC address")
+                            .arg(Arg::with_name("MAC_ADDR")
                                 .help("The MAC address of the target")
                                 .required(true)
                                 .index(1)
-                                .validator(is_mac))
+                                .validator(is_mac)))
+                        .subcommand(SubCommand::with_name("listen"))
                         .get_matches();
-    let mac = matches.value_of("MAC_ADDR").unwrap();
+    if let Some(matches) = matches.subcommand_matches("send") {
+        let mac = matches.value_of("MAC_ADDR").unwrap();
+        send(mac);
+    } else if let Some(matches) = matches.subcommand_matches("listen") {
+        println!("listen: {:?}", &matches);
+    }
+}
+
+fn send(mac: &str) {
     let mac = read_mac(mac);
     let address = "255.255.255.255:9";
     magic::send_magic_packet(&mac, address).unwrap();

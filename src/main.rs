@@ -27,8 +27,8 @@ fn read_mac(val: &str) -> [u8; 6] {
     let mac_regex = Regex::new("^([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]\
                         ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$").unwrap();
     let caps = mac_regex.captures(val).unwrap();
-    let items = (1..7).map(|x| caps.at(x).unwrap())
-                      .map(|x| u8::from_str_radix(x, 16).unwrap())
+    let items = (1..7).map(|x| caps.get(x).unwrap())
+                      .map(|x| u8::from_str_radix(x.as_str(), 16).unwrap())
                       .collect::<Vec<_>>();
     let mut mac = [0u8; 6];
     for i in 0..6 {

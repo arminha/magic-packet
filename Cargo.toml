@@ -10,6 +10,9 @@ description = "A command line tool for sending Wake-on-LAN Magic packets"
 
 build = "build.rs"
 
+[profile.release]
+lto = true
+
 [build-dependencies]
 clap = "2.21"
 regex = "0.2"

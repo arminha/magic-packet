@@ -5,17 +5,17 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 pub fn build_cli() -> App<'static, 'static> {
     App::new("magic-packet")
-            .version(VERSION)
-            .setting(AppSettings::SubcommandRequiredElseHelp)
-            .setting(AppSettings::VersionlessSubcommands)
-            .subcommand(SubCommand::with_name("send")
-                .about("Sends a magic packet to a MAC address")
-                .arg(Arg::with_name("MAC_ADDR")
-                    .help("The MAC address of the target")
-                    .required(true)
-                    .index(1)
-                    .validator(is_mac)))
-            .subcommand(SubCommand::with_name("listen"))
+        .version(VERSION)
+        .setting(AppSettings::SubcommandRequiredElseHelp)
+        .setting(AppSettings::VersionlessSubcommands)
+        .subcommand(SubCommand::with_name("send")
+                        .about("Sends a magic packet to a MAC address")
+                        .arg(Arg::with_name("MAC_ADDR")
+                                 .help("The MAC address of the target")
+                                 .required(true)
+                                 .index(1)
+                                 .validator(is_mac)))
+        .subcommand(SubCommand::with_name("listen"))
 }
 
 fn is_mac(val: String) -> Result<(), String> {
@@ -39,6 +39,6 @@ mod test {
     #[test]
     fn invalid_mac() {
         assert_eq!(Err("\"01:23:89:AB:CD\" is not a MAC address.".to_string()),
-            super::is_mac("01:23:89:AB:CD".to_string()));
+                   super::is_mac("01:23:89:AB:CD".to_string()));
     }
 }

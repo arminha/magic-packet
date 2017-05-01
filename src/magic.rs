@@ -42,6 +42,7 @@ mod test {
     #[test]
     fn broadcast_magic_packet() {
         let mac = [1, 2, 3, 4, 5, 6];
-        assert_eq!((), super::send_magic_packet(&mac, "255.255.255.255:9").unwrap());
+        assert_eq!((),
+                   super::send_magic_packet(&mac, "255.255.255.255:9").unwrap());
     }
 }

@@ -8,7 +8,7 @@ fn create_magic_packet(mac: &[u8; 6]) -> [u8; 102] {
     }
     for n in 0..16 {
         let start = 6 + n * 6;
-        &buffer[start..start + 6].clone_from_slice(mac);
+        buffer[start..start + 6].clone_from_slice(mac);
     }
     buffer
 }

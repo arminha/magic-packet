@@ -24,9 +24,10 @@ fn send(mac: &str) {
 }
 
 fn read_mac(val: &str) -> [u8; 6] {
-    let mac_regex = Regex::new("^([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]\
-                        ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$")
-            .unwrap();
+    let mac_regex = Regex::new(
+        "^([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]\
+                        ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$",
+    ).unwrap();
     let caps = mac_regex.captures(val).unwrap();
     let items = (1..7)
         .map(|x| caps.get(x).unwrap())
@@ -44,9 +45,13 @@ mod test {
 
     #[test]
     fn read_valid_mac() {
-        assert_eq!([1, 35, 137, 171, 205, 239],
-                   super::read_mac("01:23:89:AB:CD:EF"));
-        assert_eq!([1, 69, 103, 171, 205, 239],
-                   super::read_mac("01-45-67-AB-CD-EF"));
+        assert_eq!(
+            [1, 35, 137, 171, 205, 239],
+            super::read_mac("01:23:89:AB:CD:EF")
+        );
+        assert_eq!(
+            [1, 69, 103, 171, 205, 239],
+            super::read_mac("01-45-67-AB-CD-EF")
+        );
     }
 }

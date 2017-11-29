@@ -39,9 +39,9 @@ mod test {
 
     #[test]
     fn invalid_mac() {
-        assert_eq!(
-            Err("\"01:23:89:AB:CD\" is not a MAC address.".to_string()),
-            super::is_mac("01:23:89:AB:CD".to_string())
-        );
+        let error_msg = "\"01:23:89:AB:CD\" is not a MAC address. \
+            Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF."
+            .to_owned();
+        assert_eq!(Err(error_msg), super::is_mac("01:23:89:AB:CD".to_string()));
     }
 }

@@ -21,7 +21,10 @@ fn is_mac(val: String) -> Result<(), String> {
     if mac_regex.is_match(&val) {
         Ok(())
     } else {
-        Err("\"".to_string() + &val + "\" is not a MAC address.")
+        Err(format!(
+            "\"{}\" is not a MAC address. Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF.",
+            val
+        ))
     }
 }
 

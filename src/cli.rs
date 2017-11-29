@@ -1,4 +1,4 @@
-use clap::{Arg, App, AppSettings, SubCommand};
+use clap::{Arg, App};
 use regex::Regex;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -6,20 +6,14 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 pub fn build_cli() -> App<'static, 'static> {
     App::new("magic-packet")
         .version(VERSION)
-        .setting(AppSettings::SubcommandRequiredElseHelp)
-        .setting(AppSettings::VersionlessSubcommands)
-        .subcommand(
-            SubCommand::with_name("send")
-                .about("Sends a magic packet to a MAC address")
-                .arg(
-                    Arg::with_name("MAC_ADDR")
-                        .help("The MAC address of the target")
-                        .required(true)
-                        .index(1)
-                        .validator(is_mac),
-                ),
+        .about("Sends a magic packet to a MAC address")
+        .arg(
+            Arg::with_name("MAC_ADDR")
+                .help("The MAC address of the target")
+                .required(true)
+                .index(1)
+                .validator(is_mac),
         )
-        .subcommand(SubCommand::with_name("listen"))
 }
 
 fn is_mac(val: String) -> Result<(), String> {

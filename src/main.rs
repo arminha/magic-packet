@@ -9,12 +9,8 @@ mod cli;
 
 fn main() {
     let matches = cli::build_cli().get_matches();
-    if let Some(matches) = matches.subcommand_matches("send") {
-        let mac = matches.value_of("MAC_ADDR").unwrap();
-        send(mac);
-    } else if let Some(matches) = matches.subcommand_matches("listen") {
-        println!("listen: {:?}", &matches);
-    }
+    let mac = matches.value_of("MAC_ADDR").unwrap();
+    send(mac);
 }
 
 fn send(mac: &str) {

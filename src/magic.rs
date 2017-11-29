@@ -14,10 +14,10 @@ fn create_magic_packet(mac: &[u8; 6]) -> [u8; 102] {
 }
 
 pub fn send_magic_packet<A: ToSocketAddrs>(mac: &[u8; 6], addr: A) -> Result<(), Error> {
-    let socket = try!(UdpSocket::bind("0.0.0.0:0"));
-    socket.set_broadcast(true).unwrap();
+    let socket = UdpSocket::bind("0.0.0.0:0")?;
+    socket.set_broadcast(true)?;
     let buffer = create_magic_packet(mac);
-    try!(socket.send_to(&buffer, addr));
+    socket.send_to(&buffer, addr)?;
     Ok(())
 }
 

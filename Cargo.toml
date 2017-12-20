@@ -14,9 +14,9 @@ build = "build.rs"
 lto = true
 
 [build-dependencies]
-clap = "2.28"
+clap = "2.29"
 regex = "0.2"
 
 [dependencies]
-clap = "2.28"
+clap = "2.29"
 regex = "0.2"

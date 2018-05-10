@@ -1,7 +1,7 @@
 use clap::{Arg, App};
 use regex::Regex;
 
-const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn build_cli() -> App<'static, 'static> {
     App::new("magic-packet")

@@ -31,9 +31,7 @@ fn read_mac(val: &str) -> [u8; 6] {
         .map(|x| u8::from_str_radix(x.as_str(), 16).unwrap())
         .collect::<Vec<_>>();
     let mut mac = [0u8; 6];
-    for i in 0..6 {
-        mac[i] = items[i];
-    }
+    mac[..6].copy_from_slice(&items[..6]);
     mac
 }
 

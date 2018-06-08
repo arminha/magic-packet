@@ -1,11 +1,10 @@
-
 extern crate clap;
 extern crate regex;
 
 use regex::Regex;
 
-mod magic;
 mod cli;
+mod magic;
 
 fn main() {
     let matches = cli::build_cli().get_matches();
@@ -23,7 +22,7 @@ fn send(mac: &str) {
 fn read_mac(val: &str) -> [u8; 6] {
     let mac_regex = Regex::new(
         "^([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]\
-                        ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$",
+         ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$",
     ).unwrap();
     let caps = mac_regex.captures(val).unwrap();
     let items = (1..7)

@@ -34,7 +34,7 @@ fn send(mac: &str) {
     eprintln!("Sending magic packet to {}", mac);
     let mac = read_mac(mac);
     let address = "255.255.255.255:9";
-    magic::send_magic_packet(&mac, address).unwrap();
+    magic::send_magic_packet(mac, address).unwrap();
 }
 
 fn read_mac(val: &str) -> [u8; 6] {

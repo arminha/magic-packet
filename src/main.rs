@@ -41,7 +41,8 @@ fn read_mac(val: &str) -> [u8; 6] {
     let mac_regex = Regex::new(
         "^([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]\
          ([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})[:-]([0-9A-Fa-f]{2})$",
-    ).unwrap();
+    )
+    .unwrap();
     let caps = mac_regex.captures(val).unwrap();
     let items = (1..7)
         .map(|x| caps.get(x).unwrap())

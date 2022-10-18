@@ -15,8 +15,8 @@ codegen-units = 1
 
 [build-dependencies]
 clap = "2.32"
-regex = "1.1"
+regex = "1.5"
 
 [dependencies]
 clap = "2.32"
-regex = "1.1"
+regex = "1.5"

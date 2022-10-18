@@ -17,7 +17,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.24.1
+          - 1.60.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.24.1
+          - 1.60.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -95,8 +95,7 @@ jobs:
           - stable
           - beta
           - nightly
-          # no clippy available for 1.24.1
-          # - 1.24.1
+          - 1.60.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2

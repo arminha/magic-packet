@@ -14,28 +14,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
-use clap::{App, Arg};
+use clap::{Arg, Command};
 use regex::Regex;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-pub fn build_cli() -> App<'static, 'static> {
-    App::new("magic-packet")
+pub fn build_cli() -> Command {
+    Command::new("magic-packet")
         .version(VERSION)
         .about("Sends a magic packet to a MAC address")
         .arg(
-            Arg::with_name("MAC_ADDR")
+            Arg::new("MAC_ADDR")
                 .help("The MAC address of the target")
                 .required(true)
                 .index(1)
-                .validator(is_mac),
+                .value_parser(parse_mac),
         )
 }
 
-fn is_mac(val: String) -> Result<(), String> {
+fn parse_mac(val: &str) -> Result<String, String> {
     let mac_regex = Regex::new("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$").unwrap();
-    if mac_regex.is_match(&val) {
-        Ok(())
+    if mac_regex.is_match(val) {
+        Ok(val.to_owned())
     } else {
         Err(format!(
             "\"{}\" is not a MAC address. Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF.",
@@ -49,8 +49,14 @@ mod test {
 
     #[test]
     fn valid_mac() {
-        assert_eq!(Ok(()), super::is_mac("01:23:89:AB:CD:EF".to_string()));
-        assert_eq!(Ok(()), super::is_mac("01-45-67-AB-CD-EF".to_string()));
+        assert_eq!(
+            Ok("01:23:89:AB:CD:EF".to_owned()),
+            super::parse_mac("01:23:89:AB:CD:EF")
+        );
+        assert_eq!(
+            Ok("01-45-67-AB-CD-EF".to_owned()),
+            super::parse_mac("01-45-67-AB-CD-EF")
+        );
     }
 
     #[test]
@@ -58,6 +64,6 @@ mod test {
         let error_msg = "\"01:23:89:AB:CD\" is not a MAC address. \
                          Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF."
             .to_owned();
-        assert_eq!(Err(error_msg), super::is_mac("01:23:89:AB:CD".to_string()));
+        assert_eq!(Err(error_msg), super::parse_mac("01:23:89:AB:CD"));
     }
 }

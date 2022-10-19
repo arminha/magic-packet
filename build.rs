@@ -15,16 +15,18 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
-use clap::Shell;
+use clap_complete::Shell;
 use std::env;
+use std::error::Error;
 
 include!("src/cli.rs");
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let outdir = match env::var_os("OUT_DIR") {
-        None => return,
+        None => return Ok(()),
         Some(outdir) => outdir,
     };
-    let mut app = build_cli();
-    app.gen_completions("magic-packet", Shell::Bash, outdir);
+    let mut cmd = build_cli();
+    clap_complete::generate_to(Shell::Bash, &mut cmd, "magic-packet", outdir)?;
+    Ok(())
 }

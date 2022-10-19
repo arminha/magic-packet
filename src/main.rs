@@ -23,7 +23,7 @@ mod magic;
 
 fn main() {
     let matches = cli::build_cli().get_matches();
-    let mac = matches.value_of("MAC_ADDR").unwrap();
+    let mac = matches.get_one::<String>("MAC_ADDR").unwrap();
     send(mac);
 }
 

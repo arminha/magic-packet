@@ -8,6 +8,7 @@ repository = "https://github.com/arminha/magic-packet"
 description = "A command line tool for sending Wake-on-LAN Magic packets"
 
 build = "build.rs"
+edition = "2021"
 
 [profile.release]
 lto = true

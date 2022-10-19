@@ -16,9 +16,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 #![forbid(unsafe_code)]
 
-extern crate clap;
-extern crate regex;
-
 use regex::Regex;
 
 mod cli;

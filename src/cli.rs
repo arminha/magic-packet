@@ -38,8 +38,7 @@ fn parse_mac(val: &str) -> Result<String, String> {
         Ok(val.to_owned())
     } else {
         Err(format!(
-            "\"{}\" is not a MAC address. Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF.",
-            val
+            "\"{val}\" is not a MAC address. Use format 01:23:89:AB:CD:EF or 01-45-67-AB-CD-EF."
         ))
     }
 }

@@ -15,7 +15,7 @@ lto = true
 codegen-units = 1
 
 [build-dependencies]
-clap_complete = "4.0.3"
+clap_complete = "4.1.1"
 clap = "4.0.18"
 regex = "1.7.0"
 

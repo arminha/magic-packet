@@ -7,3 +7,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      clap:
+        patterns:
+          - "clap*"

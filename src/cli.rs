@@ -65,4 +65,9 @@ mod test {
             .to_owned();
         assert_eq!(Err(error_msg), super::parse_mac("01:23:89:AB:CD"));
     }
+
+    #[test]
+    fn verify_app() {
+        super::build_cli().debug_assert()
+    }
 }

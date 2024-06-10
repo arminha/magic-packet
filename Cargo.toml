@@ -15,10 +15,10 @@ lto = true
 codegen-units = 1
 
 [build-dependencies]
-clap_complete = "4.5.2"
-clap = "4.5.4"
+clap_complete = "4.5.5"
+clap = "4.5.7"
 regex = "1.10.4"
 
 [dependencies]
-clap = { version = "4.5.4", features = ["wrap_help"] }
+clap = { version = "4.5.7", features = ["wrap_help"] }
 regex = "1.10.4"

@@ -17,8 +17,8 @@ codegen-units = 1
 [build-dependencies]
 clap_complete = "4.5.2"
 clap = "4.5.4"
-regex = "1.10.4"
+regex = "1.10.5"
 
 [dependencies]
 clap = { version = "4.5.4", features = ["wrap_help"] }
-regex = "1.10.4"
+regex = "1.10.5"
